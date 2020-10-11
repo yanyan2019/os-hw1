@@ -6,7 +6,7 @@
 struct movie{
 	char   	*title;
  	int	year;
-  	char   	*languages;
+  	char   	**lang;
   	float  	rating;
   	struct	movie  *next;
 };
@@ -18,6 +18,9 @@ struct movie *createMovie(char *currLine){
 
 	// pointer for using strtok_r
 	char *ptr;
+
+	// total number of languages
+	int langSize = 5;
 
 	// token for title
 	char *token = strtok_r(currLine, ",", &ptr);
@@ -32,10 +35,30 @@ struct movie *createMovie(char *currLine){
 
 	// token for languages
 	token = strtok_r(NULL, ",", &ptr);
-//	printf("lang: %s\n", token);
-//	currMovie->languages = calloc(strlen());
-	
+	// remove the brackets
+	char *token2 = strtok_r(NULL, "[", &token);
+	token = strtok_r(NULL, "]", &token2);
+	// allocate dynamic array for languages 
+	currMovie->lang = calloc(strlen(token)+1, sizeof(char)*langSize);
+	int i;
+	printf("lang: ");
+	// dynamic array for languages
+	for(i = 0; i < langSize; i++){
+		currMovie->lang[i] = (char*)malloc(langSize+1);
+		currMovie->lang[i] = strtok_r(NULL, ";", &token);
+		if(currMovie->lang[i] != NULL){
+			
+			printf("%s, ", currMovie->lang[i]);
+		}
+	}	
+	printf("\n");
 
+	// token for rating
+	token = strtok_r(NULL, ",", &ptr);
+	currMovie->rating = strtod(token, NULL);
+	printf("rating: %.1f\n", currMovie->rating);
+
+	// token for 
 	// set the next node to null
 	currMovie->next = NULL;
 	return currMovie;	
