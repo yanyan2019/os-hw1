@@ -8,7 +8,7 @@ zipfile contains:
 	4. main.c
 	5. Makefile
 
-To compile, please type the following:
+To compile this on OS1 server, please type the following:
 	1. Make
 	2. ./movies movie_samplt_1.csv
 
